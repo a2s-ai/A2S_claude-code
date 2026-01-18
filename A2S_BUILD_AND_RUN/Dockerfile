@@ -204,7 +204,7 @@ RUN sed -i 's/# *de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen && \
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
-# Nice fonts 1-2
+# Nice fonts 2-2
 RUN apt-get update && apt-get install -y --no-install-recommends \
   fonts-noto-color-emoji \
   fonts-noto-extra \
@@ -212,7 +212,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   xkb-data \
   && rm -rf /var/lib/apt/lists/*
 
-# Runtime-Fix for Chromium inside Docker (ROOT) - if not CAP SYS_ADMIN
+# Runtime-Fix for Chromium inside Docker (ROOT) - if no CAP SYS_ADMIN
 USER root
 RUN cat <<'EOF' > /usr/local/bin/chromium-wrapper
 #!/bin/sh

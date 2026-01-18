@@ -64,3 +64,7 @@ docker run \
 root@ai-ubuntu24gpu-large:/opt#
 ```
 
+# Example
+
+<img src="./claude-code.png" />
+
