@@ -1,0 +1,11 @@
+{
+  "hasCompletedOnboarding": true,
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://minimax-m2.a2s.ai",
+    "ANTHROPIC_MODEL": "MiniMax-M2.1-AWQ",
+    "ANTHROPIC_API_KEY": "dummy",
+    "ANTHROPIC_CUSTOM_HEADERS": {
+      "anthropic-version": "2026-01-01"
+    }
+  }
+}
