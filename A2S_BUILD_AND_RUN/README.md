@@ -18,12 +18,13 @@ cd A2S_claude-code/A2S_BUILD_AND_RUN/
 
 # A2S-AI Features
 
-* Docker‑based Claude Code environment
-* Easy noVNC browser access
-* Playwright MCP Chromium support
-* Filesystem MCP support
-* Claude Code MCP memory support
+* Docker‑based Claude Code Environment
+* Easy noVNC Browser Access
+* Playwright MCP Chromium / Google-Chrome Support
+* Filesystem MCP Support
+* Claude Code MCP Memory Support
 * Example of using an alternative MiniMax‑M2 vLLM model (privacy first)
+* Claude Code CLI "Message" Injection from Docker Host
 
 # A2S GPU Server - vLLM with MiniMax-M2.1-AWQ
 
@@ -166,7 +167,7 @@ server {
 root@docker-middleware-prod1:/etc/nginx/sites-enabled#
 ```
 
-# Support for "Remote" Docker Control
+# Support for Claude Code CLI "Message" Injection from Docker Host
 
 ```
 docker exec claude-code-novnc-1 /tmux_ctl_send.sh /clear

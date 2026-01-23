@@ -83,6 +83,10 @@ handle_windows() {
         wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_vert
         wmctrl -i -r "$wid" -e 0,$HALF_W,0,$HALF_W,$SCREEN_H
         ;;
+      *google-chrome.Google-chrome*)
+        wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_vert
+        wmctrl -i -r "$wid" -e 0,$HALF_W,0,$HALF_W,$SCREEN_H
+        ;;
     esac
   done
 }
@@ -188,9 +192,11 @@ cat <<'EOF' > /home/node/openbox_menu.xml
   <item label="Terminal emulator">
     <action name="Execute"><execute>x-terminal-emulator</execute></action>
   </item>
+<!-- OFF
   <item label="Web browser">
     <action name="Execute"><execute>x-www-browser</execute></action>
   </item>
+-->
   <separator />
   <!-- This requires the presence of the 'obamenu' package to work -->
 <!-- OFF
