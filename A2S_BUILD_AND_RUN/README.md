@@ -8,9 +8,9 @@ cd A2S_claude-code/A2S_BUILD_AND_RUN/
 ./docker_build_and_run.sh
 ```
 
-# noVNC Browser Access
+# noVNC Browser Access (without nginx reverse proxy)
 
-* http://ip-address:10001/vnc.html
+* http://localhost:10001/vnc.html
 
 # claude-code-novnc
 
@@ -71,4 +71,98 @@ root@ai-ubuntu24gpu-large:/opt#
 # Example: Claude Code - MCP (Browser Use) - SAP Automation !
 
 <img src="./claude-code-mcp-sap.png" />
+
+# Nginx as Reverse Proxy
+
+```
+root@docker-middleware-prod1:/etc/nginx# egrep -B 2 -A 8 "Connection header for WebSocket reverse proxy" nginx.conf
+
+        ##
+        # Connection header for WebSocket reverse proxy
+        ##
+        map $http_upgrade $connection_upgrade {
+            default upgrade;
+            ''      close;
+        }
+
+    ##
+    # Virtual Host Configs
+root@docker-middleware-prod1:/etc/nginx#
+```
+
+```
+root@docker-middleware-prod1:/etc/nginx/sites-enabled# cat claude-code-novnc-1
+
+server {
+    server_name claude-code-novnc-1.yourdomain.local;
+    listen XXX-XXX-XXX-XXX:10001 ssl;
+
+    ssl_certificate     /etc/ssl/certs/ssl-cert-snakeoil.pem;
+    ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers off;
+
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+
+    gzip            on;
+    gzip_vary       on;
+    gzip_proxied    any;
+    gzip_comp_level 6;
+    gzip_types      text/plain text/css text/xml application/json application/javascript application/rss+xml application/atom+xml image/svg+xml;
+
+    proxy_http_version                 1.1;
+    proxy_cache_bypass                 $http_upgrade;
+    proxy_set_header Upgrade           $http_upgrade;
+    proxy_set_header Connection        $connection_upgrade;
+    proxy_set_header X-Real-IP         $remote_addr;
+    proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host  $host;
+    proxy_set_header X-Forwarded-Port  $server_port;
+    proxy_set_header Host $host;
+
+    client_max_body_size 999m;
+
+    proxy_connect_timeout              300s;
+    proxy_send_timeout                 300s;
+    proxy_read_timeout                 300s;
+
+    proxy_set_header Authorization "";
+
+    #// for VNC
+    location = / {
+        auth_ldap "Active Directory Login";
+        auth_ldap_servers ad_ldap;
+
+    proxy_pass http://127.0.0.1:10001/vnc.html;
+    }
+
+    #// Default
+    location / {
+        auth_ldap "Active Directory Login";
+        auth_ldap_servers ad_ldap;
+
+    proxy_pass http://127.0.0.1:10001;
+    }
+
+    location ~ /\.(?!well-known) {
+        deny all;
+    }
+
+    location = /favicon.ico {
+        log_not_found off;
+        access_log    off;
+    }
+
+    location = /robots.txt {
+        log_not_found off;
+        access_log    off;
+    }
+
+}
+
+root@docker-middleware-prod1:/etc/nginx/sites-enabled#
+```
 

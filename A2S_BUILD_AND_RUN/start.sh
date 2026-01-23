@@ -31,6 +31,12 @@ trap cleanup EXIT
 rm -f /tmp/.X${DISPLAY_NUM}-lock 2>/dev/null || true
 rm -f /tmp/.X11-unix/X${DISPLAY_NUM} 2>/dev/null || true
 
+# Fix: /etc/hosts for sudo
+HOSTNAME="$(hostname)"
+if ! grep -q "$HOSTNAME" /etc/hosts; then
+  sudo echo "127.0.0.1 $HOSTNAME" >> /etc/hosts
+fi
+
 # Ensure X11 socket dir exists (required for non-root Xvfb)
 sudo mkdir -p /tmp/.X11-unix
 sudo chmod 1777 /tmp/.X11-unix
@@ -54,13 +60,54 @@ echo "Xvfb ready (pid=${XVFB_PID})"
 
 export DISPLAY="${DISPLAY}"
 
+# Tiling Window
+mkdir -p /home/node/.local/bin
+
+cat <<'EOF' > /home/node/.local/bin/wmctrl-autosplit.sh
+#!/bin/sh
+
+# static res (Xvfb)
+SCREEN_W=1600
+SCREEN_H=900
+HALF_W=800
+
+handle_windows() {
+  wmctrl -lx | while read wid desk cls host title; do
+    case "$cls" in
+      *x-terminal-emulator.X-terminal-emulator*)
+        wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_horz
+        wmctrl -i -r "$wid" -e 0,0,0,$HALF_W,$SCREEN_H
+        ;;
+      *chromium.Chromium*)
+        wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_vert
+        wmctrl -i -r "$wid" -e 0,$HALF_W,0,$HALF_W,$SCREEN_H
+        ;;
+    esac
+  done
+}
+
+# initial run
+handle_windows
+
+# listen for new windows
+xprop -root -spy _NET_CLIENT_LIST | while read _; do
+  sleep 0.2
+  handle_windows
+done
+EOF
+
+chmod +x /home/node/.local/bin/wmctrl-autosplit.sh
+chown -R node:node /home/node/.local/bin
+
 # Openbox Autostart Config (NODE)
 mkdir -p /home/node/.config/openbox
 
 cat <<'EOF' > /home/node/.config/openbox/autostart
 #!/bin/sh
+/home/node/.local/bin/wmctrl-autosplit.sh &
 sleep 0.5
-terminator --maximize --command='sudo -u node sh -c "cd /home/node && /usr/local/share/npm-global/bin/claude --dangerously-skip-permissions"' &
+#terminator --maximize --command='sudo -u node sh -c "cd /home/node && /usr/local/share/npm-global/bin/claude --dangerously-skip-permissions"' &
+terminator --command='sudo -u node sh -c "cd /home/node && /usr/local/share/npm-global/bin/claude --dangerously-skip-permissions"' &
 EOF
 
 chmod +x /home/node/.config/openbox/autostart

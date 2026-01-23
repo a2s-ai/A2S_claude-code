@@ -210,6 +210,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   fonts-noto-extra \
   x11-xkb-utils \
   xkb-data \
+  wmctrl \
   && rm -rf /var/lib/apt/lists/*
 
 # Runtime-Fix for Chromium inside Docker (ROOT) - if no CAP SYS_ADMIN
@@ -232,7 +233,7 @@ RUN chmod 0755 /usr/local/bin/chromium-wrapper
 #    ln -sf /usr/local/bin/chromium-wrapper /usr/local/bin/chrome
 
 # Expose ports
-EXPOSE 6080 5900
+EXPOSE 10001 5900
 
 # Workspace
 WORKDIR /workspace
