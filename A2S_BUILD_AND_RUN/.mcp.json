@@ -14,7 +14,8 @@
     "filesystem": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-filesystem"],
-      "env": {}
+      "env": {},
+      "allowed_dirs": ["/home/node", "/workspace"]
     }
   }
 }
