@@ -65,6 +65,7 @@ mkdir -p /home/node/.local/bin
 
 cat <<'EOF' > /home/node/.local/bin/wmctrl-autosplit.sh
 #!/bin/sh
+# Developed: Daniel Plominski for A2S.AI (23.01.2026)
 
 # static res (Xvfb)
 SCREEN_W=1600

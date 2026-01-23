@@ -18,6 +18,7 @@ docker run \
        --name claude-code-novnc-1 \
        -e NOVNC_PORT=10001 \
        -e VNC_PASSWORD=claude \
+       -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro \
        -v /CEPH/projects:/workspace/projects \
        -v /CEPH/templates:/workspace/templates:ro \
        claude-code-novnc
