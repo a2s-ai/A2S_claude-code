@@ -105,10 +105,21 @@ mkdir -p /home/node/.config/openbox
 
 cat <<'EOF' > /home/node/.config/openbox/autostart
 #!/bin/sh
+# Developed: Daniel Plominski for A2S.AI (23.01.2026)
+
 /home/node/.local/bin/wmctrl-autosplit.sh &
 sleep 0.5
-#terminator --maximize --command='sudo -u node sh -c "cd /home/node && /usr/local/share/npm-global/bin/claude --dangerously-skip-permissions"' &
-terminator --command='sudo -u node sh -c "cd /home/node && /usr/local/share/npm-global/bin/claude --dangerously-skip-permissions"' &
+
+tmux -S /tmp/claude.sock new -s claude -d
+sleep 0.5
+
+/tmux_ctl_send.sh /start_claude.sh
+sleep 0.5
+
+/tmux_ctl_send.sh C-m
+sleep 0.5
+
+#terminator &
 EOF
 
 chmod +x /home/node/.config/openbox/autostart
@@ -119,6 +130,95 @@ sudo mkdir -p /root/.config/openbox
 sudo cp /home/node/.config/openbox/autostart /root/.config/openbox/autostart
 sudo chmod +x /root/.config/openbox/autostart
 sudo chown -R root:root /root/.config
+
+# Tmux Session Controller
+cat <<'EOF' > /home/node/tmux_ctl_send.sh
+#!/bin/sh
+# Developed: Daniel Plominski for A2S.AI (23.01.2026)
+
+tmux -S /tmp/claude.sock send-keys -t claude "$1"
+EOF
+
+chmod +x /home/node/tmux_ctl_send.sh
+chown -R node:node /home/node/tmux_ctl_send.sh
+
+sudo cp -fv /home/node/tmux_ctl_send.sh /tmux_ctl_send.sh
+
+# Tmux Print
+cat <<'EOF' > /home/node/tmux_print_output.sh
+#!/bin/sh
+# Developed: Daniel Plominski for A2S.AI (23.01.2026)
+
+tmux -S /tmp/claude.sock capture-pane -t claude -p
+EOF
+
+chmod +x /home/node/tmux_print_output.sh
+chown -R node:node /home/node/tmux_print_output.sh
+
+sudo cp -fv /home/node/tmux_print_output.sh /tmux_print_output.sh
+
+# ZSH Config
+cat <<'EOF' > /home/node/.zshrc
+
+if command -v tmux >/dev/null 2>&1; then
+  if [ -z "$TMUX" ] && [ -S /tmp/claude.sock ]; then
+    tmux -S /tmp/claude.sock has-session -t claude 2>/dev/null && \
+    tmux -S /tmp/claude.sock attach -t claude
+  fi
+fi
+
+EOF
+
+chown -R node:node /home/node/.zshrc
+
+# Set ZSH as Default
+sudo chsh -s /bin/zsh root
+sudo chsh -s /bin/zsh node
+
+# Disable "Exit" for OpenBox
+cat <<'EOF' > /home/node/openbox_menu.xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openbox_menu xmlns="http://openbox.org/"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://openbox.org/
+                file:///usr/share/openbox/menu.xsd">
+
+<menu id="root-menu" label="Openbox 3">
+  <item label="Terminal emulator">
+    <action name="Execute"><execute>x-terminal-emulator</execute></action>
+  </item>
+  <item label="Web browser">
+    <action name="Execute"><execute>x-www-browser</execute></action>
+  </item>
+  <separator />
+  <!-- This requires the presence of the 'obamenu' package to work -->
+<!-- OFF
+  <menu id="/Debian" />
+  <separator />
+  <menu id="applications-menu" label="Applications" execute="/usr/bin/obamenu"/>
+  <separator />
+  <item label="ObConf">
+    <action name="Execute"><execute>obconf</execute></action>
+  </item>
+-->
+  <item label="Reconfigure">
+    <action name="Reconfigure" />
+  </item>
+  <item label="Restart">
+    <action name="Restart" />
+  </item>
+  <separator />
+<!-- OFF
+  <item label="Exit">
+    <action name="Exit" />
+  </item>
+-->
+</menu>
+
+</openbox_menu>
+EOF
+sudo cp -fv /home/node/openbox_menu.xml /etc/xdg/openbox/menu.xml
 
 # Starting: openbox
 echo "Starting openbox..."

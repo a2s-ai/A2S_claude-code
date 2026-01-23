@@ -88,8 +88,12 @@ RUN npm install -g @anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}
 RUN npm install -g @modelcontextprotocol/server-memory
 
 # Example Config
+USER root
 COPY .claude.json /home/node/.claude.json
+RUN chown node:node /home/node/.claude.json
+
 COPY .mcp.json /home/node/.mcp.json
+RUN chown node:node /home/node/.mcp.json
 
 # MCP Datapath: Memory (ROOT)
 USER root
@@ -204,8 +208,15 @@ RUN sed -i 's/# *de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen && \
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
+RUN locale-gen de_DE.UTF-8 && \
+  update-locale LANG=de_DE.UTF-8
+
+RUN locale-gen en_US.UTF-8 && \
+  update-locale LANG=en_US.UTF-8
+
 # Nice fonts 2-2
 RUN apt-get update && apt-get install -y --no-install-recommends \
+  fonts-firacode \
   fonts-noto-color-emoji \
   fonts-noto-extra \
   x11-xkb-utils \

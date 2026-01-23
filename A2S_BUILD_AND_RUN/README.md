@@ -166,3 +166,15 @@ server {
 root@docker-middleware-prod1:/etc/nginx/sites-enabled#
 ```
 
+# Support for "Remote" Docker Control
+
+```
+docker exec claude-code-novnc-1 /tmux_ctl_send.sh /clear
+docker exec claude-code-novnc-1 /tmux_ctl_send.sh "Open the Browser. Go to github.com"
+docker exec claude-code-novnc-1 /tmux_ctl_send.sh C-m
+
+docker exec claude-code-novnc-1 /tmux_print_output.sh
+```
+
+<img src="./claude-code-tmux.png" />
+
