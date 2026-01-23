@@ -73,18 +73,40 @@ SCREEN_H=900
 HALF_W=800
 
 handle_windows() {
+  chrome_count=0
+  chromium_count=0
+  term_count=0
+
   wmctrl -lx | while read wid desk cls host title; do
     case "$cls" in
-      *x-terminal-emulator.X-terminal-emulator*)
+      *.X-terminal-emulator)
+        term_count=$((term_count + 1))
         wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_horz
-        wmctrl -i -r "$wid" -e 0,0,0,$HALF_W,$SCREEN_H
+
+        if [ "$term_count" -eq 1 ]; then
+          wmctrl -i -r "$wid" -e 0,0,0,$HALF_W,$SCREEN_H
+        else
+          wmctrl -i -r "$wid" -e 0,$HALF_W,0,$HALF_W,$SCREEN_H
+        fi
         ;;
-      *chromium.Chromium*)
-        wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_vert
+      *.Chromium)
+        chromium_count=$((chromium_count + 1))
+        wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_horz
         wmctrl -i -r "$wid" -e 0,$HALF_W,0,$HALF_W,$SCREEN_H
         ;;
-      *google-chrome.Google-chrome*)
-        wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_vert
+      *.Google-chrome|*.Google-Chrome)
+        chrome_count=$((chrome_count + 1))
+        wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_horz
+
+        if [ "$chrome_count" -eq 1 ]; then
+          wmctrl -i -r "$wid" -e 0,0,0,$HALF_W,$SCREEN_H
+        else
+          wmctrl -i -r "$wid" -e 0,$HALF_W,0,$HALF_W,$SCREEN_H
+        fi
+        ;;
+      *)
+        # unknowns
+        wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_horz
         wmctrl -i -r "$wid" -e 0,$HALF_W,0,$HALF_W,$SCREEN_H
         ;;
     esac
