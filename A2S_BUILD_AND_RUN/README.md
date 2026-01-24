@@ -22,11 +22,17 @@ cd A2S_claude-code/A2S_BUILD_AND_RUN/
 * Easy noVNC Browser Access
 * Playwright MCP Chromium / Google-Chrome Support
 * Filesystem MCP Support
-* Claude Code MCP Memory Support
+* Memory MCP Support for Claude Code
 * Example of using an alternative MiniMax‑M2 vLLM model (privacy first)
 * Claude Code CLI "Message" Injection from Docker Host
+* * (for n8n / SSH - Remote Automation)
 
 # A2S GPU Server - vLLM with MiniMax-M2.1-AWQ
+
+* Proxmox PVE 8 / 9 - GPU / vGPU Passthrough
+* * https://pve.proxmox.com/wiki/PCI_Passthrough
+* * https://pve.proxmox.com/wiki/NVIDIA_vGPU_on_Proxmox_VE
+* * https://research.colfax-intl.com/gpu-passthrough-on-proxmox-ve-8/
 
 * Ubuntu 24 LTS VM with 4 x NVIDIA RTX 6000A
 
@@ -72,6 +78,22 @@ root@ai-ubuntu24gpu-large:/opt#
 # Example: Claude Code - MCP (Browser Use) - SAP Automation !
 
 <img src="./claude-code-mcp-sap.png" />
+
+# Support for Claude Code CLI "Message" Injection from Docker Host
+
+```
+docker exec claude-code-novnc-1 /tmux_ctl_send.sh /clear
+docker exec claude-code-novnc-1 /tmux_ctl_send.sh "Go to the /home/node/workspace/projects/sap directory. Use CLAUDE.md as the workflow template and export the latest SAP zrekal."
+docker exec claude-code-novnc-1 /tmux_ctl_send.sh C-m
+
+docker exec claude-code-novnc-1 /tmux_print_output.sh
+```
+
+<img src="./claude-code-tmux.png" />
+
+# Example: n8n Automation (SAP process automation through intelligent, autonomous browser control.)
+
+<img src="./claude-code-n8n.png" />
 
 # Nginx as Reverse Proxy
 
@@ -167,15 +189,4 @@ server {
 root@docker-middleware-prod1:/etc/nginx/sites-enabled#
 ```
 
-# Support for Claude Code CLI "Message" Injection from Docker Host
-
-```
-docker exec claude-code-novnc-1 /tmux_ctl_send.sh /clear
-docker exec claude-code-novnc-1 /tmux_ctl_send.sh "Open the Browser. Go to github.com"
-docker exec claude-code-novnc-1 /tmux_ctl_send.sh C-m
-
-docker exec claude-code-novnc-1 /tmux_print_output.sh
-```
-
-<img src="./claude-code-tmux.png" />
-
+### EOF
