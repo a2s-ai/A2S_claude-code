@@ -99,6 +99,8 @@ docker exec claude-code-novnc-1 /tmux_ctl_send.sh C-m
 docker exec claude-code-novnc-1 /tmux_print_output.sh
 ```
 
+## Schema
+
 <img src="./claude-code-tmux.png" />
 
 # Example: n8n Automation
