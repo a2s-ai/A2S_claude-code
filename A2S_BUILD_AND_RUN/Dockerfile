@@ -246,7 +246,7 @@ exec /usr/bin/chromium \
 EOF
 RUN chmod 0755 /usr/local/bin/chromium-wrapper
 
-# Compatibility
+# Compatibility - if no CAP SYS_ADMIN
 #RUN ln -sf /usr/local/bin/chromium-wrapper /usr/local/bin/chromium && \
 #    ln -sf /usr/local/bin/chromium-wrapper /usr/local/bin/chromium-browser && \
 #    ln -sf /usr/local/bin/chromium-wrapper /usr/local/bin/google-chrome && \

@@ -11,6 +11,7 @@ cd A2S_claude-code/A2S_BUILD_AND_RUN/
 # noVNC Browser Access (without nginx reverse proxy)
 
 * http://localhost:10001/vnc.html
+* * Launch the terminal emulator in the current noVNC session in order to connect to the claude code tmux session
 
 # claude-code-novnc
 
