@@ -191,6 +191,12 @@ server {
 root@docker-middleware-prod1:/etc/nginx/sites-enabled#
 ```
 
+# Ensure the noVNC Docker and vLLM integrations are secured via HAProxy / Traefik with proper SSL settings !
+
+* https://github.com/haproxy/haproxy
+
+* https://github.com/traefik/traefik
+
 ## Acknowledgements
 
 This project would not have been possible without the outstanding work and contributions of the following teams and communities, who provide the foundations, tools, and technologies it builds upon:
