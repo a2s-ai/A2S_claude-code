@@ -219,7 +219,7 @@ This project would not have been possible without the outstanding work and contr
 * vLLM Team
 * * https://github.com/vllm-project/vllm/graphs/contributors
 
-* MiniMax Team
+* MiniMax Team - for the Large Language Models
 * * https://github.com/MiniMax-AI
 
 * QuantTrio Team – for their work on LLM model quantization
@@ -228,11 +228,11 @@ This project would not have been possible without the outstanding work and contr
 * n8n Team
 * * https://github.com/n8n-io/n8n/graphs/contributors
 
-* Docker Team
-* * https://github.com/orgs/docker/people
-
 * Google Chrome Team
 * * https://github.com/orgs/GoogleChrome/people
+
+* Docker Team
+* * https://github.com/orgs/docker/people
 
 * NVIDIA Team
 * * https://github.com/nvidia
