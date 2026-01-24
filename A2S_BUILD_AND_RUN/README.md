@@ -42,6 +42,7 @@ cd A2S_claude-code/A2S_BUILD_AND_RUN/
 ```
 root@ai-ubuntu24gpu-large:/opt# cat run-vllm-max_a2s-ai_MiniMax-M2.1-AWQ.sh
 #!/bin/sh
+# Developed: Daniel Plominski for A2S.AI (03.01.2025)
 
 export HUGGING_FACE_HUB_TOKEN=hf_XXX-XXX-XXX-XXX
 export CUDA_VISIBLE_DEVICES="0,1,2,3"
