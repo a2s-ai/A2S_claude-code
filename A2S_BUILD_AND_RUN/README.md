@@ -91,11 +91,13 @@ docker exec claude-code-novnc-1 /tmux_print_output.sh
 
 <img src="./claude-code-tmux.png" />
 
-# Example: n8n Automation (SAP process automation through intelligent, autonomous browser control.)
+# Example: n8n Automation
+
+## SAP process automation through intelligent, autonomous browser control.
 
 <img src="./claude-code-n8n.png" />
 
-# Nginx as Reverse Proxy
+# Example: Nginx as Reverse Proxy
 
 ```
 root@docker-middleware-prod1:/etc/nginx# egrep -B 2 -A 8 "Connection header for WebSocket reverse proxy" nginx.conf
@@ -188,5 +190,37 @@ server {
 
 root@docker-middleware-prod1:/etc/nginx/sites-enabled#
 ```
+
+## Acknowledgements
+
+This project would not have been possible without the outstanding work and contributions of the following teams and communities, who provide the foundations, tools, and technologies it builds upon:
+
+* Anthropic Claude Code Team
+* * https://github.com/anthropics/claude-code/graphs/contributors
+
+* vLLM Team
+* * https://github.com/vllm-project/vllm/graphs/contributors
+
+* MiniMax Team
+* * https://github.com/MiniMax-AI
+
+* QuantTrio Team – for their work on LLM model quantization
+* * https://huggingface.co/QuantTrio
+
+* n8n Team
+* * https://github.com/n8n-io/n8n/graphs/contributors
+
+* Google Chrome Team
+* * https://github.com/orgs/GoogleChrome/people
+
+* NVIDIA Team
+* * https://github.com/nvidia
+
+* Proxmox Team
+* * https://github.com/proxmox
+
+* The global Linux Community
+
+Thank you to all contributors and maintainers for your dedication to open-source software and for enabling projects like this one.
 
 ### EOF
