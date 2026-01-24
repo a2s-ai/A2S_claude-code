@@ -228,6 +228,9 @@ This project would not have been possible without the outstanding work and contr
 * n8n Team
 * * https://github.com/n8n-io/n8n/graphs/contributors
 
+* Docker Team
+* * https://github.com/orgs/docker/people
+
 * Google Chrome Team
 * * https://github.com/orgs/GoogleChrome/people
 
