@@ -29,12 +29,12 @@ cd A2S_claude-code/A2S_BUILD_AND_RUN/
 
 # A2S GPU Server - vLLM with MiniMax-M2.1-AWQ
 
-* Proxmox PVE 8 / 9 - GPU / vGPU Passthrough
+* Proxmox PVE 8 / 9 - GPU Passthrough & vGPU Support
 * * https://pve.proxmox.com/wiki/PCI_Passthrough
 * * https://pve.proxmox.com/wiki/NVIDIA_vGPU_on_Proxmox_VE
 * * https://research.colfax-intl.com/gpu-passthrough-on-proxmox-ve-8/
 
-* Ubuntu 24 LTS VM with 4 x NVIDIA RTX 6000A
+* Ubuntu 24 LTS VM with 4 x NVIDIA RTX 6000A (GPU Passthrough)
 
 ## vLLM (Docker) Settings with 194K (full) Context
 
