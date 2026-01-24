@@ -95,6 +95,16 @@ RUN chown node:node /home/node/.claude.json
 COPY .mcp.json /home/node/.mcp.json
 RUN chown node:node /home/node/.mcp.json
 
+RUN mkdir -p /root/.config/claude-code
+COPY .claude.json /root/.config/claude-code/claude.json
+COPY .mcp.json /root/.config/claude-code/mcp.json
+RUN chown -R root:root /root/.config
+
+RUN mkdir -p /home/node/.config/claude-code
+COPY .claude.json /home/node/.config/claude-code/claude.json
+COPY .mcp.json /home/node/.config/claude-code/mcp.json
+RUN chown -R node:node /home/node/.config
+
 # MCP Datapath: Memory (ROOT)
 USER root
 RUN mkdir -p /DATA/memory && \
@@ -258,6 +268,9 @@ RUN chmod +x /start_claude.sh
 
 # Final Context Switch (NODE)
 USER node
+
+# Link workspace
+RUN ln -s /workspace /home/node/workspace
 
 ENTRYPOINT ["/usr/bin/tini","--"]
 CMD ["/start.sh"]
