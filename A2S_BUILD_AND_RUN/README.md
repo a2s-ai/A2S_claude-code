@@ -156,9 +156,9 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Forwarded-Host  $host;
     proxy_set_header X-Forwarded-Port  $server_port;
-    proxy_set_header Host $host;
+    proxy_set_header Host              $host;
 
-    client_max_body_size 999m;
+    client_max_body_size               999m;
 
     proxy_connect_timeout              300s;
     proxy_send_timeout                 300s;
