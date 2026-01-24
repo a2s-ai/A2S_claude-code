@@ -83,11 +83,19 @@ root@ai-ubuntu24gpu-large:/opt#
 
 # Support for Claude Code CLI "Message" Injection from Docker Host
 
+## RUN
+
 ```
 docker exec claude-code-novnc-1 /tmux_ctl_send.sh /clear
-docker exec claude-code-novnc-1 /tmux_ctl_send.sh "Go to the /home/node/workspace/projects/sap directory. Use CLAUDE.md as the workflow template and export the latest SAP zrekal."
 docker exec claude-code-novnc-1 /tmux_ctl_send.sh C-m
 
+docker exec claude-code-novnc-1 /tmux_ctl_send.sh "Go to the /home/node/workspace/projects/sap directory. Use CLAUDE.md as the workflow template and export the latest SAP zrekal."
+docker exec claude-code-novnc-1 /tmux_ctl_send.sh C-m
+```
+
+## Logging / Status
+
+```
 docker exec claude-code-novnc-1 /tmux_print_output.sh
 ```
 
