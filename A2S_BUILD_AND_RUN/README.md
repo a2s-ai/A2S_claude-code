@@ -222,14 +222,17 @@ This project would not have been possible without the outstanding work and contr
 * MiniMax Team - for the Large Language Models
 * * https://github.com/MiniMax-AI
 
-* QuantTrio Team – for their work on LLM model quantization
+* QuantTrio Team - for their work on LLM model quantization
 * * https://huggingface.co/QuantTrio
 
-* n8n Team
-* * https://github.com/n8n-io/n8n/graphs/contributors
+* Playwright Team
+* * https://github.com/microsoft/playwright/graphs/contributors
 
 * Google Chrome Team
 * * https://github.com/orgs/GoogleChrome/people
+
+* n8n Team
+* * https://github.com/n8n-io/n8n/graphs/contributors
 
 * Docker Team
 * * https://github.com/orgs/docker/people
