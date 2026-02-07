@@ -25,8 +25,8 @@ docker run \
        claude-code-novnc
 
 #       -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro \
-#       -v /CEPH/projects:/workspace/projects \
-#       -v /CEPH/templates:/workspace/templates:ro \
+#       -v /CEPH/projects:/home/node/workspace/projects \
+#       -v /CEPH/templates:/home/node/workspace/templates:ro \
 
 #       -v /etc/hosts:/etc/hosts:ro \
 

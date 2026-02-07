@@ -271,7 +271,12 @@ RUN chmod +x /start_claude.sh
 USER node
 
 # Link workspace
-RUN ln -s /workspace /home/node/workspace
+#/RUN ln -s /workspace /home/node/workspace
+
+WORKDIR /home/node/workspace
+
+RUN mkdir -p /home/node/workspace/projects
+RUN mkdir -p /home/node/workspace/templates
 
 ENTRYPOINT ["/usr/bin/tini","--"]
 CMD ["/start.sh"]
