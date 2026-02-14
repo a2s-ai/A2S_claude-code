@@ -1,22 +1,14 @@
 #!/usr/bin/env bun
 
+import { lifecycle, STALE_UPVOTE_THRESHOLD } from "./issue-lifecycle.ts";
+
 // --
 
 const NEW_ISSUE = "https://github.com/anthropics/claude-code/issues/new/choose";
 const DRY_RUN = process.argv.includes("--dry-run");
-const STALE_DAYS = 14;
-const STALE_UPVOTE_THRESHOLD = 10;
 
 const CLOSE_MESSAGE = (reason: string) =>
   `Closing for now — ${reason}. Please [open a new issue](${NEW_ISSUE}) if this is still relevant.`;
-
-const lifecycle = [
-  { label: "invalid",     days: 3,  reason: "this doesn't appear to be about Claude Code" },
-  { label: "needs-repro", days: 7,  reason: "we still need reproduction steps to investigate" },
-  { label: "needs-info",  days: 7,  reason: "we still need a bit more information to move forward" },
-  { label: "stale",       days: 14, reason: "inactive for too long" },
-  { label: "autoclose",   days: 14, reason: "inactive for too long" },
-];
 
 // --
 
@@ -51,12 +43,13 @@ async function githubRequest<T>(
 // --
 
 async function markStale(owner: string, repo: string) {
+  const staleDays = lifecycle.find((l) => l.label === "stale")!.days;
   const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - STALE_DAYS);
+  cutoff.setDate(cutoff.getDate() - staleDays);
 
   let labeled = 0;
 
-  console.log(`\n=== marking stale (${STALE_DAYS}d inactive) ===`);
+  console.log(`\n=== marking stale (${staleDays}d inactive) ===`);
 
   for (let page = 1; page <= 10; page++) {
     const issues = await githubRequest<any[]>(
@@ -115,6 +108,7 @@ async function closeExpired(owner: string, repo: string) {
 
       for (const issue of issues) {
         if (issue.pull_request) continue;
+        if (issue.locked) continue;
         const base = `/repos/${owner}/${repo}/issues/${issue.number}`;
 
         const events = await githubRequest<any[]>(`${base}/events?per_page=100`);
@@ -144,20 +138,14 @@ async function closeExpired(owner: string, repo: string) {
 
 // --
 
-async function main() {
-  const owner = process.env.GITHUB_REPOSITORY_OWNER;
-  const repo = process.env.GITHUB_REPOSITORY_NAME;
-  if (!owner || !repo)
-    throw new Error("GITHUB_REPOSITORY_OWNER and GITHUB_REPOSITORY_NAME required");
+const owner = process.env.GITHUB_REPOSITORY_OWNER;
+const repo = process.env.GITHUB_REPOSITORY_NAME;
+if (!owner || !repo)
+  throw new Error("GITHUB_REPOSITORY_OWNER and GITHUB_REPOSITORY_NAME required");
 
-  if (DRY_RUN) console.log("DRY RUN — no changes will be made\n");
+if (DRY_RUN) console.log("DRY RUN — no changes will be made\n");
 
-  const labeled = await markStale(owner, repo);
-  const closed = await closeExpired(owner, repo);
+const labeled = await markStale(owner, repo);
+const closed = await closeExpired(owner, repo);
 
-  console.log(`\nDone: ${labeled} ${DRY_RUN ? "would be labeled" : "labeled"} stale, ${closed} ${DRY_RUN ? "would be closed" : "closed"}`);
-}
-
-main().catch(console.error);
-
-export {};
+console.log(`\nDone: ${labeled} ${DRY_RUN ? "would be labeled" : "labeled"} stale, ${closed} ${DRY_RUN ? "would be closed" : "closed"}`);
