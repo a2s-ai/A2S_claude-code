@@ -9,7 +9,6 @@ docker run \
        --restart unless-stopped \
        -e ANTHROPIC_BASE_URL="https://minimax-m2.a2s.ai/v1" \
        -e ANTHROPIC_API_KEY="dummy" \
-       -e ANTHROPIC_AUTH_TOKEN="dummy" \
        -e ANTHROPIC_MODEL="MiniMax-M2.5-AWQ" \
        -e ANTHROPIC_DEFAULT_OPUS_MODEL="MiniMax-M2.5-AWQ" \
        -e ANTHROPIC_DEFAULT_SONNET_MODEL="MiniMax-M2.5-AWQ" \
@@ -28,6 +27,8 @@ docker run \
        -e NOVNC_PORT=10001 \
        -e VNC_PASSWORD=claude \
        claude-code-novnc
+
+#       -e ANTHROPIC_AUTH_TOKEN="dummy" \
 
 #       -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro \
 #       -v /CEPH/projects:/home/node/workspace/projects \
