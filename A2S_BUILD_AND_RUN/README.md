@@ -28,7 +28,7 @@ cd A2S_claude-code/A2S_BUILD_AND_RUN/
 * Claude Code CLI "Message" Injection from Docker Host
 * * (for n8n / SSH - Remote Automation)
 
-# A2S GPU Server - vLLM with MiniMax-M2.1-AWQ
+# A2S GPU Server - vLLM with MiniMax-M2.5-AWQ
 
 * Proxmox PVE 8 / 9 - GPU Passthrough & vGPU Support
 * * https://pve.proxmox.com/wiki/PCI_Passthrough
@@ -40,7 +40,7 @@ cd A2S_claude-code/A2S_BUILD_AND_RUN/
 ## vLLM (Docker) Settings with 194K (full) Context
 
 ```
-root@ai-ubuntu24gpu-large:/opt# cat run-vllm-max_a2s-ai_MiniMax-M2.1-AWQ.sh
+root@ai-ubuntu24gpu-large:/opt# cat run-vllm-max_a2s-ai_MiniMax-M2.5-AWQ.sh
 #!/bin/sh
 # Developed: Daniel Plominski for A2S.AI (03.01.2025)
 
@@ -59,13 +59,13 @@ docker run \
        -p 8000:8000 \
        -v /data/opt/vllm:/root/.cache/huggingface \
        vllm/vllm-openai:nightly \
-         --model a2s-ai/MiniMax-M2.1-AWQ \
-         --served-model-name MiniMax-M2.1-AWQ \
+         --model a2s-ai/MiniMax-M2.5-AWQ \
+         --served-model-name MiniMax-M2.5-AWQ \
          --tensor-parallel-size 4 \
          --enable-auto-tool-choice \
          --tool-call-parser minimax_m2 \
          --reasoning-parser minimax_m2_append_think \
-         --max-model-len 194560 \
+         --max-model-len 168000 \
          --enable-expert-parallel \
          --trust-remote-code
 
