@@ -18,7 +18,7 @@ docker run \
        -e DISABLE_ERROR_REPORTING=1 \
        -e CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
        -e DISABLE_BUG_COMMAND=1 \
-       -e CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=75 \
+       -e CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=70 \
        -e IS_SANDBOX=1 \
        --cap-add=SYS_ADMIN \
        --security-opt seccomp=unconfined \
