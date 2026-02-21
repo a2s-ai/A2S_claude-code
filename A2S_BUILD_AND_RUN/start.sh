@@ -1009,6 +1009,12 @@ cat <<'EOF' > /home/node/openbox_menu.xml
 EOF
 sudo cp -fv /home/node/openbox_menu.xml /etc/xdg/openbox/menu.xml
 
+# Clean up custom files
+sudo rm -f /home/node/openbox_rc.xml
+sudo rm -f /home/node/openbox_menu.xml
+sudo chown root:node /home/node/tmux_ctl_send.sh
+sudo chown root:node /home/node/tmux_print_output.sh
+
 # Starting: openbox
 echo "Starting openbox..."
 openbox-session >/tmp/openbox-session.log 2>&1 &
