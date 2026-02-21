@@ -37,7 +37,7 @@ cd A2S_claude-code/A2S_BUILD_AND_RUN/
 
 * Ubuntu 24 LTS VM with 4 x NVIDIA RTX 6000A (GPU Passthrough)
 
-## vLLM (Docker) Settings with 168K (usable) Context
+## vLLM (Docker) Settings with 196K (full) Context
 
 ```
 root@ai-ubuntu24gpu-large:/opt# cat run-vllm-max_a2s-ai_MiniMax-M2.5-AWQ.sh
@@ -65,7 +65,9 @@ docker run \
          --enable-auto-tool-choice \
          --tool-call-parser minimax_m2 \
          --reasoning-parser minimax_m2_append_think \
-         --max-model-len 168000 \
+         --kv-cache-dtype fp8 \
+         --gpu-memory-utilization 0.88 \
+         --max-model-len 196608 \
          --enable-expert-parallel \
          --trust-remote-code
 

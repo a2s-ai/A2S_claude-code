@@ -17,7 +17,6 @@ docker run \
        -e DISABLE_ERROR_REPORTING=1 \
        -e CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
        -e DISABLE_BUG_COMMAND=1 \
-       -e CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=70 \
        -e IS_SANDBOX=1 \
        --cap-add=SYS_ADMIN \
        --security-opt seccomp=unconfined \
@@ -28,6 +27,10 @@ docker run \
        -e VNC_PASSWORD=claude \
        claude-code-novnc
 
+#// For MiniMax-M2.5-AWQ at 168k on 4x NVIDIA RTX 6000A (compact after 140k/200k) without "vllm --kv-cache-dtype fp8"
+#       -e CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=70 \
+
+#// Custom Settings
 #       -e ANTHROPIC_AUTH_TOKEN="dummy" \
 
 #       -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro \
