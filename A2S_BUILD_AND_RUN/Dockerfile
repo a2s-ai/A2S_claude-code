@@ -265,6 +265,7 @@ RUN chmod 0755 /usr/local/bin/chromium-wrapper
 # Claude Code: create statusline
 RUN cat <<'EOF' > /home/node/.claude/statusline.sh
 #!/bin/bash
+# Developed: Daniel Plominski for A2S.AI (21.02.2026)
 input=$(cat)
 
 PCT=$(echo "$input" | jq -r '.context_window.used_percentage // 0' | cut -d. -f1)
