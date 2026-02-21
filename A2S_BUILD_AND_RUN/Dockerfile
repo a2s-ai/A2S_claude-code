@@ -262,6 +262,31 @@ RUN chmod 0755 /usr/local/bin/chromium-wrapper
 #    ln -sf /usr/local/bin/chromium-wrapper /usr/local/bin/google-chrome-stable && \
 #    ln -sf /usr/local/bin/chromium-wrapper /usr/local/bin/chrome
 
+# Claude Code: create statusline
+RUN cat <<'EOF' > /home/node/.claude/statusline.sh
+#!/bin/bash
+input=$(cat)
+
+PCT=$(echo "$input" | jq -r '.context_window.used_percentage // 0' | cut -d. -f1)
+SIZE=$(echo "$input" | jq -r '.context_window.context_window_size // 0')
+COST=$(echo "$input" | jq -r '.cost.total_cost_usd // 0')
+
+SIZE_K=$(echo "$SIZE" | awk '{ if ($1 >= 1000) printf "%.0fk", $1/1000; else printf "%d", $1 }')
+
+if [ "$PCT" -ge 80 ]; then
+  CLR='\033[01;31m'
+elif [ "$PCT" -ge 50 ]; then
+  CLR='\033[01;33m'
+else
+  CLR='\033[01;32m'
+fi
+RST='\033[00m'
+
+printf '\033[01;32m%s@%s\033[00m:\033[01;34m%s\033[00m | %b%s%%%b of %s | $%s' "$(whoami)" "$(hostname -s)" "$(pwd)" "$CLR" "$PCT" "$RST" "$SIZE_K" "$COST"
+EOF
+RUN chmod 0755 /home/node/.claude/statusline.sh
+RUN chown node:node /home/node/.claude/statusline.sh
+
 # Expose ports
 EXPOSE 10001 5900
 
