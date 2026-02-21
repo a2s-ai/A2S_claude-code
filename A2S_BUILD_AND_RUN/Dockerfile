@@ -235,6 +235,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   wmctrl \
   && rm -rf /var/lib/apt/lists/*
 
+# Extra Packages (nice to have)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  python3-pip \
+  python3-pandas \
+  xmllint \
+  && rm -rf /var/lib/apt/lists/*
+
 # Runtime-Fix for Chromium inside Docker (ROOT) - if no CAP SYS_ADMIN
 USER root
 RUN cat <<'EOF' > /usr/local/bin/chromium-wrapper
