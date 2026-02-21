@@ -266,13 +266,25 @@ RUN chmod 0755 /usr/local/bin/chromium-wrapper
 RUN cat <<'EOF' > /home/node/.claude/statusline.sh
 #!/bin/bash
 # Developed: Daniel Plominski for A2S.AI (21.02.2026)
-input=$(cat)
 
-PCT=$(echo "$input" | jq -r '.context_window.used_percentage // 0' | cut -d. -f1)
-SIZE=$(echo "$input" | jq -r '.context_window.context_window_size // 0')
-COST=$(echo "$input" | jq -r '.cost.total_cost_usd // 0')
+input=$(cat 2>/dev/null) || input=""
 
-SIZE_K=$(echo "$SIZE" | awk '{ if ($1 >= 1000) printf "%.0fk", $1/1000; else printf "%d", $1 }')
+# Validate JSON before parsing
+if echo "$input" | jq -e . >/dev/null 2>&1; then
+  PCT=$(echo "$input" | jq -r '.context_window.used_percentage // 0' 2>/dev/null | cut -d. -f1)
+  SIZE=$(echo "$input" | jq -r '.context_window.context_window_size // 0' 2>/dev/null)
+  COST=$(echo "$input" | jq -r '.cost.total_cost_usd // 0' 2>/dev/null)
+fi
+
+# Ensure numeric defaults for empty/invalid values
+PCT="${PCT:-0}"
+SIZE="${SIZE:-0}"
+COST="${COST:-0}"
+[[ "$PCT" =~ ^[0-9]+$ ]] || PCT=0
+[[ "$SIZE" =~ ^[0-9]+$ ]] || SIZE=0
+[[ "$COST" =~ ^[0-9.]+$ ]] || COST=0
+
+SIZE_K=$(awk -v s="$SIZE" 'BEGIN { if (s >= 1000) printf "%.0fk", s/1000; else printf "%d", s }')
 
 if [ "$PCT" -ge 80 ]; then
   CLR='\033[01;31m'
