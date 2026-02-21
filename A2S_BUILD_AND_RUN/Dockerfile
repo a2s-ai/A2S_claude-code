@@ -287,6 +287,10 @@ EOF
 RUN chmod 0755 /home/node/.claude/statusline.sh
 RUN chown node:node /home/node/.claude/statusline.sh
 
+COPY settings.json /home/node/.claude/settings.json
+RUN chmod 0644 /home/node/.claude/settings.json
+RUN chown node:node /home/node/.claude/settings.json
+
 # Expose ports
 EXPOSE 10001 5900
 
