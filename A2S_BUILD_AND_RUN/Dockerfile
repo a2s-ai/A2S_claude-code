@@ -239,7 +239,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN apt-get update && apt-get install -y --no-install-recommends \
   python3-pip \
   python3-pandas \
-  xmllint \
+  libxml2-utils \
   && rm -rf /var/lib/apt/lists/*
 
 # Runtime-Fix for Chromium inside Docker (ROOT) - if no CAP SYS_ADMIN
