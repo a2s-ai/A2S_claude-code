@@ -75,9 +75,14 @@ docker run \
 root@ai-ubuntu24gpu-large:/opt#
 ```
 
-# Example: Claude Code
+# Example: Claude Code (statusline)
 
 <img src="./claude-code.png" />
+
+# Example: Claude Code - MCP (Browser Use)
+
+<video src="./claude-code-browser-use.mov" controls="controls" style="max-width: 100%;">
+</video>
 
 # Example: Claude Code - MCP (Browser Use) - SAP Automation !
 
