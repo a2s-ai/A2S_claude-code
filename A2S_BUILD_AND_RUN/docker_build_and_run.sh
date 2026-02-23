@@ -7,7 +7,7 @@ docker run \
        -it \
        -d \
        --restart unless-stopped \
-       -e TZ=UTC \
+       -e TZ=Etc/UTC \
        -e ANTHROPIC_BASE_URL="https://minimax-m2.a2s.ai/v1" \
        -e ANTHROPIC_API_KEY="dummy" \
        -e ANTHROPIC_MODEL="MiniMax-M2.5-AWQ" \
