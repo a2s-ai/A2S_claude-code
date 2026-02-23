@@ -1,6 +1,6 @@
 # Developed: Daniel Plominski for A2S.AI (18.01.2026)
 
-FROM node:20
+FROM node:22
 
 ARG TZ
 ENV TZ="$TZ"
@@ -241,6 +241,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   python3-pandas \
   libxml2-utils \
   awscli \
+  psmisc \
   && rm -rf /var/lib/apt/lists/*
 
 # Runtime-Fix for Chromium inside Docker (ROOT) - if no CAP SYS_ADMIN
