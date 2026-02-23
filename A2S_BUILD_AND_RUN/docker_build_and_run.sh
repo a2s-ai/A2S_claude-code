@@ -34,7 +34,10 @@ docker run \
 #// Custom Settings
 #       -e ANTHROPIC_AUTH_TOKEN="dummy" \
 
+#// For NGFW SSL-Decryption
 #       -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro \
+
+#// For CEPH Object Storage
 #       -v /CEPH/projects:/home/node/workspace/projects \
 #       -v /CEPH/templates:/home/node/workspace/templates:ro \
 
