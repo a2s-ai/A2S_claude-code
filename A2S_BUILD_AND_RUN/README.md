@@ -81,7 +81,7 @@ root@ai-ubuntu24gpu-large:/opt#
 
 # Example: Claude Code - MCP (Browser Use)
 
-<img src="./claude-code-browser-usw.gif" />
+<img src="./claude-code-browser-use.gif" />
 
 # Example: Claude Code - MCP (Browser Use) - SAP Automation !
 
