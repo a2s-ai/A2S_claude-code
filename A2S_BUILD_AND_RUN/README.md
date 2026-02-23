@@ -75,10 +75,6 @@ docker run \
 root@ai-ubuntu24gpu-large:/opt#
 ```
 
-# Example: Claude Code - "statusline.sh" (included)
-
-<img src="./claude-code.png" />
-
 # Example: Claude Code - MCP (Browser Use)
 
 <img src="./claude-code-browser-use.gif" />
